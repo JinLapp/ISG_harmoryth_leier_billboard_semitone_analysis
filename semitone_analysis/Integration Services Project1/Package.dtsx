@@ -1,0 +1,431 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/1/2020 5:55:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-MRMKLUM"
+  DTS:CreatorName="DESKTOP-MRMKLUM\janma"
+  DTS:DTSID="{AD09A082-7F13-434C-B199-12AA9CC55257}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1031"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{9CE03153-FA14-4DFF-8BA4-786A48DF0A78}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VM_ISG_billboard_json]"
+      DTS:CreationName="FLATFILE"
+      DTS:Description="VM_ISG_billboard_json"
+      DTS:DTSID="{22D41EB6-A622-4833-818F-C82E7F3AE75B}"
+      DTS:ObjectName="VM_ISG_billboard_json">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::vFileName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1031"
+          DTS:HeaderRowDelimiter="_x007C_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:DataType="302"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Spalte 0"
+              DTS:DTSID="{2033ADCC-280D-48DE-B121-E564FE771BAD}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VM_target_db]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3168BBE0-59E4-41AD-B0E9-C7AE0DF675FA}"
+      DTS:ObjectName="VM_target_db">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=&lt;set server name&gt;;User ID=&lt;set user name&gt;;Initial Catalog=testDB;Provider=SQLNCLI11.1;Auto Translate=False;Workstation ID=set workstation id;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF05F652-0918-4B68-96BD-32A82485B3E6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A53B577F-0B19-46BF-AE83-4E4A7B22F5D6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vSourceDir">
+      <DTS:VariableValue
+        DTS:DataType="8">xyz:\set\path\to\BillboardChords\</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach-Schleifencontainer"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach-Schleifencontainer"
+      DTS:DTSID="{96B09543-3AD2-4D18-B8B0-F76BC91728E3}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach-Schleifencontainer">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{FBBB63B9-39B0-40E3-8BD4-196F5B758281}"
+        DTS:ObjectName="{FBBB63B9-39B0-40E3-8BD4-196F5B758281}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::vSourceDir]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="xyz:\set\path\to\BillboardChords\" />
+            <FEFEProperty
+              FileSpec="*.*" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach-Schleifencontainer\Datenflusstask"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Datenflusstask"
+          DTS:DTSID="{2BD5F92F-444B-4D75-B60C-7F81E9A31AC7}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Datenflusstask"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flatfilequelle;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Alle Rechte vorbehalten; http://www.microsoft.com/sql/support;1"
+                  description="Flatfilequelle"
+                  localeId="1031"
+                  name="Flatfilequelle"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Gibt an, ob Spalten mit der Länge &quot;0&quot; als NULL behandelt werden."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Gibt den Namen der Ausgabespalte an, die den Dateinamen enthält. Wenn kein Name angegeben wird, wird keine Ausgabespalte generiert, die den Dateinamen enthält."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[VM_ISG_billboard_json]"
+                      connectionManagerRefId="Package.ConnectionManagers[VM_ISG_billboard_json]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle]"
+                      name="Ausgabe der Flatfilequelle">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle].Columns[Spalte 0]"
+                          codePage="1252"
+                          dataType="text"
+                          errorOrTruncationOperation="Konvertierung"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle].ExternalColumns[Spalte 0]"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle].Columns[Spalte 0]"
+                          name="Spalte 0"
+                          truncationRowDisposition="IgnoreFailure">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Zeigt an, ob die Spalte die schnelleren gebietsschemaneutralen Analyseroutinen verwendet."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Gibt an, ob die Daten im Binärformat sind."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle].ExternalColumns[Spalte 0]"
+                          codePage="1252"
+                          dataType="text"
+                          name="Spalte 0" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle]"
+                      isErrorOut="true"
+                      name="Fehlerausgabe der Flatfilequelle">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[Fehlerausgabespalte der Flatfilequelle]"
+                          codePage="1252"
+                          dataType="text"
+                          description="Fehlerausgabespalte der Flatfilequelle"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[Fehlerausgabespalte der Flatfilequelle]"
+                          name="Fehlerausgabespalte der Flatfilequelle" />
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Fehlerausgabe der Flatfilequelle].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB-Ziel;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Alle Rechte vorbehalten; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB-Ziel"
+                  name="OLE DB-Ziel"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Die Anzahl der Sekunden für das Timeout eines Befehls. Der Wert &quot;0&quot; zeigt einen unendlichen Timeoutwert an."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Gibt den Namen des zum Öffnen eines Rowsets verwendeten Datenbankobjekts an."
+                      name="OpenRowset">[OLE DB-Ziel]</property>
+                    <property
+                      dataType="System.String"
+                      description="Gibt die Variable an, die den Namen des zum Öffnen eines Rowsets verwendeten Datenbankobjekts enthält."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="Der auszuführende SQL-Befehl."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Gibt die zu verwendende Spaltencodepage an, wenn keine Codepageinformationen von der Datenquelle verfügbar sind."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Erzwingt die Verwendung des DefaultCodePage-Eigenschaftswerts beim Beschreiben von Zeichendaten."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Gibt den zum Zugreifen auf die Datenbank verwendeten Modus an."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Zeigt an, ob die für Identitätsspalten übergebenen Werte zum Ziel kopiert werden. Bei &quot;False&quot; werden die Werte für Identitätsspalten am Ziel automatisch generiert. Trifft nur zu, wenn die Option &quot;Schnelles Laden&quot; aktiviert ist."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Zeigt an, ob für Spalten, die NULL enthalten, NULL am Ziel eingefügt wird. Bei &quot;False&quot; werden für Spalten, die NULL enthalten, am Ziel die Standardwerte eingefügt. Trifft nur zu, wenn die Option &quot;Schnelles Laden&quot; aktiviert ist."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Gibt die für die Option &quot;Schnelles Laden&quot; zu verwendenden Optionen an. Trifft nur zu, wenn die Option &quot;Schnelles Laden&quot; aktiviert ist."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Gibt an, wann beim Einfügen von Daten Commits ausgegeben werden. Der Wert &quot;0&quot; gibt an, dass ein Commit am Ende des Einfügens von Daten ausgegeben wird. Trifft nur zu, wenn die Option &quot;Schnelles Laden&quot; aktiviert ist."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[VM_target_db]"
+                      connectionManagerRefId="Package.ConnectionManagers[VM_target_db]"
+                      description="Die für den Zugriff auf die Datenbank verwendete OLE DB-Laufzeitverbindung."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels]"
+                      errorOrTruncationOperation="Einfügen"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="Eingabe des OLE DB-Ziels">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels].Columns[Spalte 0]"
+                          cachedCodepage="1252"
+                          cachedDataType="text"
+                          cachedName="Spalte 0"
+                          externalMetadataColumnId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels].ExternalColumns[Spalte 0]"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle].Columns[Spalte 0]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels].ExternalColumns[Spalte 0]"
+                          codePage="1252"
+                          dataType="text"
+                          name="Spalte 0" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Outputs[Fehlerausgabe des OLE DB-Ziels]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Fehlerausgabe des OLE DB-Ziels"
+                      synchronousInputId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Outputs[Fehlerausgabe des OLE DB-Ziels].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Outputs[Fehlerausgabe des OLE DB-Ziels].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Outputs[Fehlerausgabe des OLE DB-Ziels].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Outputs[Fehlerausgabe des OLE DB-Ziels].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Foreach-Schleifencontainer\Datenflusstask.Paths[Ausgabe der Flatfilequelle]"
+                  endId="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel.Inputs[Eingabe des OLE DB-Ziels]"
+                  name="Ausgabe der Flatfilequelle"
+                  startId="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle.Outputs[Ausgabe der Flatfilequelle]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{577D58AC-0DD6-43A4-BA02-4DD236F4559F}"
+          DTS:ObjectName="{577D58AC-0DD6-43A4-BA02-4DD236F4559F}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::vFileName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Dieser CDATA-Abschnitt enthält die Layoutinformationen des Pakets, z.B. Informationen wie X-/Y-Koordinaten, Breite und Höhe.-->
+<!--Wenn Sie diesen Abschnitt manuell ändern und Ihnen ein Fehler unterläuft, können Sie ihn löschen. -->
+<!--Das Paket kann zwar weiterhin normal geladen werden, aber frühere Layoutinformationen gehen verloren, und die Elemente auf der Entwurfsoberfläche werden vom Designer automatisch neu angeordnet.-->
+<Objects
+  Version="8">
+  <!--Jeder darunter liegende Knoten enthält Eigenschaften, die sich nicht auf das Laufzeitverhalten auswirken.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Foreach-Schleifencontainer\Datenflusstask"
+          TopLeft="29,42" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="237,150"
+          Size="237,193"
+          Id="Package\Foreach-Schleifencontainer"
+          TopLeft="130,55" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Foreach-Schleifencontainer\Datenflusstask">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Foreach-Schleifencontainer\Datenflusstask\Flatfilequelle"
+          TopLeft="151,52" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel"
+          TopLeft="151,245" />
+        <EdgeLayout
+          Id="Package\Foreach-Schleifencontainer\Datenflusstask.Paths[Ausgabe der Flatfilequelle]"
+          TopLeft="221.5,94">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,151"
+              Start="0,0"
+              End="0,143.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,143.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Foreach-Schleifencontainer\Datenflusstask\OLE DB-Ziel">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
